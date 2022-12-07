@@ -72,3 +72,6 @@ export PATH=$HOME/.local/bin:$PATH
 # aliases
 
 [[ -f $HOME/.aliases ]] && source $HOME/.aliases
+
+# go
+export PATH=$PATH:/usr/local/go/bin

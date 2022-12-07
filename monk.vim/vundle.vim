@@ -147,7 +147,7 @@ augroup autoformat_settings
   autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
   autocmd FileType java AutoFormatBuffer google-java-format
   autocmd FileType jslayout AutoFormatBuffer jslfmt
-  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType go AutoFormatBuffer gofmt 
   autocmd FileType python AutoFormatBuffer pyformat
   autocmd FileType markdown AutoFormatBuffer mdformat
   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab foldmethod=indent
@@ -157,6 +157,7 @@ augroup go_custom
   autocmd FileType go set tabstop=2
   autocmd FileType go set list
   autocmd FileType go set listchars=tab:»\ ,trail:°,extends:>,precedes:<,nbsp:+
+  autocmd FileType go inoremap <buffer> . .<C-x><C-o>
 augroup END
 
 augroup cpp_custom

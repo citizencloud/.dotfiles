@@ -19,7 +19,11 @@ declare -A dotfiles=(
 declare -r PACKAGES=(
     "byobu"
     "htop"
+    "gcc"
     "vim"
+    "curl"
+    "xclip"
+    "openjdk-11-jdk"
 )
 
 function install_dotfile() {
@@ -38,7 +42,8 @@ function main() {
 
     sudo apt update -y && sudo apt upgrade -y
     sudo apt install -y "${PACKAGES[@]}"
-    vim +BundleInstall
+    vim +BundleInstall +qall
+    vim +GoInstallBinaries +qall
     bash
 }
 
