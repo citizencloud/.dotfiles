@@ -1,0 +1,45 @@
+#! /bin/bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+declare -r source_dir="$(dirname "$(readlink -f "${BASH_SOURCE}")")"
+
+declare -A dotfiles=(
+    [.aliases]="${HOME}"
+    [.amzn_aliases]="${HOME}"
+    [.profile]="${HOME}"
+    [.vimrc]="${HOME}"
+    [.bashrc]="${HOME}"
+    [.gitconfig]="${HOME}"
+    [.git-prompt.sh]="${HOME}"
+)
+
+declare -r PACKAGES=(
+    "byobu"
+    "htop"
+    "vim"
+)
+
+function install_dotfile() {
+    local dotfile="$1"
+    local install_path=$(dirname "$2/$dotfile")
+    mkdir -p "${install_path}"
+    local cmd=(ln -fs "${source_dir%%/}/files/${dotfile}" "${install_path%%/}/${dotfile}")
+    echo "!installing ${dotfile}: ${cmd[@]}"
+    "${cmd[@]}"
+}
+
+function main() {
+    for dotfile in "${!dotfiles[@]}"; do
+        install_dotfile "${dotfile}" "${dotfiles[$dotfile]}"
+    done
+
+    sudo apt update -y && sudo apt upgrade -y
+    sudo apt install -y "${PACKAGES[@]}"
+    vim +BundleInstall
+    bash
+}
+
+main "${@}"
