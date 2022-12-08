@@ -5,3 +5,5 @@
 [user]
 	email = whitfiecbeta@gmail.com 
 	name = christopher whitfield
+[init]
+	defaultBranch = main 

@@ -168,6 +168,10 @@ augroup cpp_custom
   autocmd FileType cpp set listchars=tab:»\ ,trail:°,extends:>,precedes:<,nbsp:+
 augroup END
 
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+
 function RunGazel(dir)
   echom a:dir
 endfunction

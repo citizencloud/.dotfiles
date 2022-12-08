@@ -22,3 +22,6 @@ alias d='dirs -v'
 # Git Aliases
 alias g='git'
 alias gs='git status'
+
+# Other
+alias pass='gopass'
