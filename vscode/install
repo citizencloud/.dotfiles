@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# install vscode
+
+function install_vscode() {
+if [ ! `which code` ]; then
+  echo vscode is not installed..
+  curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+  sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+  sudo sh -c 'echo "deb [arch=amd64] http://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+  sudo apt update
+  sudo apt install code
+else
+  echo vscode is already installed, nothing to do.
+fi
+}
+
+function copy_settings() {
+
+  # user settings
+  if [ ! -f ~/.config/Code/User/settings.json ]; then
+    echo settings.json file does not exist, will copy. 
+    cp settings.json ~/.config/Code/User/
+    else
+      settings.json file already exists.
+  fi
+  
+  # keybindings
+  if [ ! -f ~/.config/Code/User/keybindings.json ]; then
+    echo keybindings.json file does not exist, will copy.
+    cp keybindings.json ~/.config/Code/User/
+    else
+      keybindings.json file already exists.
+  fi
+}
+
+extensionList=(
+  github.github-vscode-theme
+  vscodevim.vim
+)
+
+function main() {
+  install_vscode
+  copy_settings
+  for i in ${extensionList[@]}; do
+  code --install-extension $i
+done
+}
+
+main "${@}"
