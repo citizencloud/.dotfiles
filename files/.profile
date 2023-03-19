@@ -75,3 +75,7 @@ export PATH=$HOME/.local/bin:$PATH
 
 # go
 export PATH=$PATH:/usr/local/go/bin
+
+# rust
+export PATH=$PATH:$HOME/.cargo.env
+

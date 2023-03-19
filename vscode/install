@@ -37,6 +37,8 @@ function copy_settings() {
 extensionList=(
   github.github-vscode-theme
   vscodevim.vim
+  janisdd.vscode-edit-csv
+  esbenp.prettier-vscode
 )
 
 function main() {

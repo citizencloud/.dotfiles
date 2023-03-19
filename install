@@ -7,45 +7,65 @@ set -o pipefail
 declare -r source_dir="$(dirname "$(readlink -f "${BASH_SOURCE}")")"
 
 declare -A dotfiles=(
-    [.aliases]="${HOME}"
-    [.amzn_aliases]="${HOME}"
-    [.profile]="${HOME}"
-    [.vimrc]="${HOME}"
-    [.bashrc]="${HOME}"
-    [.gitconfig]="${HOME}"
-    [.git-prompt.sh]="${HOME}"
+[.aliases]="${HOME}"
+[.amzn_aliases]="${HOME}"
+[.profile]="${HOME}"
+[.vimrc]="${HOME}"
+[.bashrc]="${HOME}"
+[.gitconfig]="${HOME}"
+[.git-prompt.sh]="${HOME}"
+)
+
+declare -A repositories=(
+"ppa:mithrandie/csvq"
 )
 
 declare -r PACKAGES=(
-    "byobu"
-    "htop"
-    "gcc"
-    "vim"
-    "curl"
-    "xclip"
-    "openjdk-11-jdk"
-    "jq"
+"byobu"
+"htop"
+"gcc"
+"vim"
+"curl"
+"xclip"
+"openjdk-11-jdk"
+"jq"
+"csvq"
 )
 
 function install_dotfile() {
-    local dotfile="$1"
-    local install_path=$(dirname "$2/$dotfile")
-    mkdir -p "${install_path}"
-    local cmd=(ln -fs "${source_dir%%/}/files/${dotfile}" "${install_path%%/}/${dotfile}")
-    echo "!installing ${dotfile}: ${cmd[@]}"
-    "${cmd[@]}"
+  local dotfile="$1"
+  local install_path=$(dirname "$2/$dotfile")
+  mkdir -p "${install_path}"
+  local cmd=(ln -fs "${source_dir%%/}/files/${dotfile}" "${install_path%%/}/${dotfile}")
+  echo "!installing ${dotfile}: ${cmd[@]}"
+  "${cmd[@]}"
+}
+
+function add_apt_repository() {
+  local repo="$1"
+  local cmd=(sudo add-apt-repository ${repo})
+  echo "installing ${repo}"
+  "${cmd[@]}"
 }
 
 function main() {
-    for dotfile in "${!dotfiles[@]}"; do
-        install_dotfile "${dotfile}" "${dotfiles[$dotfile]}"
-    done
+  
+  # apt repository attachment
+  for repo in "${!repositories[@]}"; do
+    add_apt_repository "${repo}"
+  done
 
-    sudo apt update -y && sudo apt upgrade -y
+  # package installations
+  for dotfile in "${!dotfiles[@]}"; do
+    install_dotfile "${dotfile}" "${dotfiles[$dotfile]}"
+  done
+
+    # package manager & text editor setup
+    sudo apt update -y &&  sudo apt upgrade -y
     sudo apt install -y "${PACKAGES[@]}"
     vim +BundleInstall +qall
     vim +GoInstallBinaries +qall
     bash
-}
+  }
 
-main "${@}"
+  main "${@}"
