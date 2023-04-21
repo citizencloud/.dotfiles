@@ -39,6 +39,7 @@ extensionList=(
   vscodevim.vim
   janisdd.vscode-edit-csv
   esbenp.prettier-vscode
+  yzhang.markdown-all-in-one
 )
 
 function main() {

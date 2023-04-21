@@ -27,9 +27,12 @@ declare -r PACKAGES=(
 "vim"
 "curl"
 "xclip"
+"openjdk-8-jdk"
 "openjdk-11-jdk"
 "jq"
 "csvq"
+"libfuse2"
+"make"
 )
 
 function install_dotfile() {

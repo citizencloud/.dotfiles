@@ -72,9 +72,11 @@ export PATH=$HOME/.local/bin:$PATH
 # aliases
 
 [[ -f $HOME/.aliases ]] && source $HOME/.aliases
+[[ -f $HOME/.amzn_aliases ]] && source $HOME/.amzn_aliases
 
 # go
 export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$(go env GOPATH)
 
 # rust
 export PATH=$PATH:$HOME/.cargo.env
