@@ -40,6 +40,7 @@ extensionList=(
   janisdd.vscode-edit-csv
   esbenp.prettier-vscode
   yzhang.markdown-all-in-one
+  TakumiI.markdowntable
 )
 
 function main() {
