@@ -41,6 +41,7 @@ extensionList=(
   esbenp.prettier-vscode
   yzhang.markdown-all-in-one
   TakumiI.markdowntable
+  eriklynd.json-tools
 )
 
 function main() {
