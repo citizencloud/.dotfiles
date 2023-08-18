@@ -34,6 +34,10 @@ declare -r PACKAGES=(
 "libfuse2"
 "make"
 "libssl1.0.0"
+"texlive-latex-base"
+"texlive-latex-recommended"
+"latexmk"
+"texlive-latex-extra"
 )
 
 function install_dotfile() {
@@ -53,7 +57,7 @@ function add_apt_repository() {
 }
 
 function main() {
-  
+
   # apt repository attachment
   for repo in "${!repositories[@]}"; do
     add_apt_repository "${repo}"
