@@ -42,6 +42,7 @@ extensionList=(
   yzhang.markdown-all-in-one
   TakumiI.markdowntable
   eriklynd.json-tools
+  jebbs.plantuml
 )
 
 function main() {
