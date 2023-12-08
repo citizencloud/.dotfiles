@@ -81,3 +81,6 @@ export GOPATH=$(go env GOPATH)
 # rust
 export PATH=$PATH:$HOME/.cargo.env
 
+# node
+export NVM_HOME=$HOME/.nvm
+[ -s "$NVM_HOME/nvm.sh" ] && \. "$NVM_HOME/nvm.sh"

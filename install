@@ -18,6 +18,7 @@ declare -A dotfiles=(
 
 declare -A repositories=(
 "ppa:mithrandie/csvq"
+"ppa:rael-gc/rvm"
 )
 
 declare -r PACKAGES=(
@@ -29,6 +30,7 @@ declare -r PACKAGES=(
 "xclip"
 "openjdk-8-jdk"
 "openjdk-11-jdk"
+"openjdk-17-jdk"
 "jq"
 "csvq"
 "libfuse2"
@@ -38,6 +40,9 @@ declare -r PACKAGES=(
 "texlive-latex-recommended"
 "latexmk"
 "texlive-latex-extra"
+"remmina"
+"remmina-plugin-vnc"
+"rvm"
 )
 
 function install_dotfile() {
@@ -67,6 +72,9 @@ function main() {
   for dotfile in "${!dotfiles[@]}"; do
     install_dotfile "${dotfile}" "${dotfiles[$dotfile]}"
   done
+
+  # install nvm
+  PROFILE=/dev/null bash -c $HOME/.dotfiles/node/install_nvm.sh
 
     # package manager & text editor setup
     sudo apt update -y &&  sudo apt upgrade -y
