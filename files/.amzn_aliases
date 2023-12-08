@@ -12,5 +12,8 @@ alias bball='brc --allPackages'
 alias bbb='brc --allPackages brazil-build'
 alias bbra='bbr apollo-pkg'
 
+# cr 
+alias newcr='cr --reviewers posix:wwro-crm-api-eng --publish'
+
 # other
 alias monkdesk='python3 sys/cloud-desktop/dcv-cdd.py connect monk.corp.amazon.com'
