@@ -4,6 +4,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+goversion=1.21.6
+
 declare -r source_dir="$(dirname "$(readlink -f "${BASH_SOURCE}")")"
 
 declare -A dotfiles=(
@@ -35,14 +37,12 @@ declare -r PACKAGES=(
 "csvq"
 "libfuse2"
 "make"
-"libssl1.0.0"
 "texlive-latex-base"
 "texlive-latex-recommended"
 "latexmk"
 "texlive-latex-extra"
 "remmina"
 "remmina-plugin-vnc"
-"rvm"
 )
 
 function install_dotfile() {
@@ -52,6 +52,20 @@ function install_dotfile() {
   local cmd=(ln -fs "${source_dir%%/}/files/${dotfile}" "${install_path%%/}/${dotfile}")
   echo "!installing ${dotfile}: ${cmd[@]}"
   "${cmd[@]}"
+}
+
+function install_chrome() {
+  mkdir -p ${HOME}/tmp
+  wget -P ${HOME}/tmp https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  sudo dpkg -i ${HOME}/tmp/google-chrome-stable_current_amd64.deb
+  rm -rf ${HOME}/tmp
+}
+
+function install_go() {
+  mkdir -p ${HOME}/tmp
+  wget -P ${HOME}/tmp https://dl.google.com/go/go$goversion.linux-amd64.tar.gz 
+  sudo tar -C /usr/local -xzf ${HOME}/tmp/go$goversion.linux-amd64.tar.gz
+  rm -rf ${HOME}/tmp/
 }
 
 function add_apt_repository() {
@@ -75,6 +89,24 @@ function main() {
 
   # install nvm
   PROFILE=/dev/null bash -c $HOME/.dotfiles/node/install_nvm.sh
+
+  # install go
+  if ! command -v go --version &> /dev/null
+  then
+    echo the go command was not found on the system. installing from source.
+    install_go
+  else
+    echo go is already installed on this machine, moving on
+  fi
+
+  # install chrome
+  if ! command -v google-chrome --version &> /dev/null
+  then
+    echo google chrome not found on system. fetching the latest
+    install_chrome
+  else
+    echo google chrome is already installed .
+  fi
 
     # package manager & text editor setup
     sudo apt update -y &&  sudo apt upgrade -y
