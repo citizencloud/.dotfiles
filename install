@@ -43,6 +43,7 @@ declare -r PACKAGES=(
 "texlive-latex-extra"
 "remmina"
 "remmina-plugin-vnc"
+"rpm"
 )
 
 function install_dotfile() {
@@ -68,9 +69,13 @@ function install_go() {
   rm -rf ${HOME}/tmp/
 }
 
+function install_rust() {
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+}
+
 function add_apt_repository() {
   local repo="$1"
-  local cmd=(sudo add-apt-repository ${repo})
+  local cmd=(sudo add-apt-repository ${repo} --yes)
   echo "installing ${repo}"
   "${cmd[@]}"
 }
@@ -79,7 +84,7 @@ function main() {
 
   # apt repository attachment
   for repo in "${!repositories[@]}"; do
-    add_apt_repository "${repo}"
+    add_apt_repository "${repo}" 
   done
 
   # package installations
@@ -107,6 +112,9 @@ function main() {
   else
     echo google chrome is already installed .
   fi
+
+  # install rust 
+  install_rust
 
     # package manager & text editor setup
     sudo apt update -y &&  sudo apt upgrade -y
