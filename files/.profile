@@ -79,7 +79,7 @@ export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$(go env GOPATH)
 
 # rust
-export PATH=$PATH:$HOME/.cargo.env
+export PATH=$PATH:$HOME/.cargo/bin
 
 # node
 export NVM_HOME=$HOME/.nvm
