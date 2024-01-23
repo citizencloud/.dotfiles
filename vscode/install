@@ -43,6 +43,7 @@ extensionList=(
   TakumiI.markdowntable
   eriklynd.json-tools
   jebbs.plantuml
+  ms-vscode.makefile-tools
 )
 
 function main() {
