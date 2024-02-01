@@ -53,6 +53,7 @@ declare -r PACKAGES=(
 "audio-recorder"
 "flatpak"
 "gnome-software-plugin-flatpak"
+"signal-desktop"
 )
 
 declare -A npm_packages=(
@@ -110,7 +111,16 @@ function install_obsidian() {
   rm -rf ${HOME}/tmp
 }
 
-function main() {
+function setup_signal() {
+  mkdir -p ${HOME}/tmp
+  wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > ${HOME}/tmp/signal-desktop-keyring.gpg
+  cat ${HOME}/tmp/signal-desktop-keyring.gpg | sudo tee /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
+  echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
+    sudo tee /etc/apt/sources.list.d/signal-xenial.list
+      rm -rf ${HOME}/tmp
+    }
+
+    function main() {
 
   # apt repository attachment
   for repo in "${!repositories[@]}"; do
@@ -152,9 +162,14 @@ function main() {
     echo obsidian is already installed. 
   fi
 
+  # setup signal
+  setup_signal
+
+
   # package manager & text editor setup
   sudo apt update -y &&  sudo apt upgrade -y
   sudo apt install -y "${PACKAGES[@]}"
+  sudo apt autoremove -y
 
   # install npm packages
   for pkg in "${!npm_packages[@]}"; do
