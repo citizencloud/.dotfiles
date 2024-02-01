@@ -51,6 +51,8 @@ declare -r PACKAGES=(
 "xsel"
 "npm"
 "audio-recorder"
+"flatpak"
+"gnome-software-plugin-flatpak"
 )
 
 declare -A npm_packages=(
@@ -167,6 +169,9 @@ function main() {
   else
     echo rust is already installed. 
   fi
+
+  # add flathub repository
+  flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
   # vim setup
   vim +BundleInstall +qall
