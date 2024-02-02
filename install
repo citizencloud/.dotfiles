@@ -54,6 +54,7 @@ declare -r PACKAGES=(
 "flatpak"
 "gnome-software-plugin-flatpak"
 "signal-desktop"
+"gnupg2"
 )
 
 declare -A npm_packages=(
@@ -111,6 +112,15 @@ function install_obsidian() {
   rm -rf ${HOME}/tmp
 }
 
+function install_cheat() {
+  mkdir -p ${HOME}/tmp
+  wget https://github.com/cheat/cheat/releases/download/4.4.2/cheat-linux-amd64.gz -O ${HOME}/tmp/cheat.gz
+  gunzip ${HOME}/tmp/cheat.gz
+  chmod +x ${HOME}/tmp/cheat
+  sudo mv ${HOME}/tmp/cheat /usr/local/bin/cheat
+  rm -rf ${HOME}/tmp
+}
+
 function setup_signal() {
   mkdir -p ${HOME}/tmp
   wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > ${HOME}/tmp/signal-desktop-keyring.gpg
@@ -164,6 +174,15 @@ function setup_signal() {
 
   # setup signal
   setup_signal
+
+  # install cheat
+  if ! command -v cheat &> /dev/null
+  then
+    echo cheat is not installed - will do it
+    install_cheat
+  else
+    echo cheat is already installed
+  fi
 
 
   # package manager & text editor setup
