@@ -17,3 +17,8 @@ alias newcr='cr --reviewers posix:wwro-crm-api-eng --publish'
 
 # other
 alias monkdesk='python3 sys/cloud-desktop/dcv-cdd.py connect monk.corp.amazon.com'
+
+# goland build constraints issue
+# https://sage.amazon.dev/posts/1189330?autoRedirectedFromLegacyUI=1&t=7
+alias bgoreplace='sed -i "s|./build|$(echo $(brazil-path package-build-root))|g" go.mod'
+alias bgo='bbr ; bgoreplace'
