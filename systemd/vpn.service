@@ -1,0 +1,17 @@
+
+[Unit]
+Description=VPN Service (ExpressVPN)
+After=network-online.target
+
+[Service]
+User=root
+EnvironmentFile=-/etc/default/expressvpn
+Environment=PATH=/bin:/sbin:/usr/bin:/usr/sbin
+ExecStart=/usr/bin/expressvpn connect $LOCATION 
+ExecStop=/usr/bin/expressvpn disconnect
+Restart=on-failure
+Type=forking
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
